@@ -84,12 +84,6 @@ Simulation::~Simulation() {
 	delete planner;
 	delete grid;
 }
-
-void Simulation::calc_constraint_stiffness(int n) {
-	// 1.-(1.-0.25)**(4./6)
-	friction_constraint_stiffness =
-		1.0f - powf(1.0f - friction_constraint_stiffness, (1.0f / n));
-}
  
 void Simulation::update_predicted_position()
 {
@@ -462,6 +456,7 @@ void Simulation::do_time_step()
 	// 2. searching neighboring
 	grid->update(particles);
 
+	// +. behavior determine with local information
 	for (int i = 0; i < num_particles; i++)
 	{
 		Particle* p = particles[i];
